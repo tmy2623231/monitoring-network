@@ -11,6 +11,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
+using System.Media;
+using System.Reflection;
+
+
 
 namespace monitoring_for_Airport_network
 {
@@ -19,6 +24,13 @@ namespace monitoring_for_Airport_network
         // 鼠标消息常量，用于实现窗口拖动
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
+        //定时器
+        private static System.Timers.Timer aTimer;
+        private static bool isTimerRunning = false;
+        // 报警声音控制器
+        private int open = 0;
+        //记录次数
+        private int totalCount = 1;
 
         // 引入 Windows API 函数，用于实现窗口拖动
         [DllImportAttribute("user32.dll")]
@@ -31,6 +43,7 @@ namespace monitoring_for_Airport_network
             InitializeComponent();
             CenterToScreen();  // 将窗口居中显示
             AssignmentListView(); // 列表视图赋值
+            logMTime.SelectedIndex = 0;
         }
 
         // 鼠标按下事件处理，主要用于实现窗口拖动
@@ -72,8 +85,14 @@ namespace monitoring_for_Airport_network
         private void packetLossRateB_Click(object sender, EventArgs e)
         {
             SwitchPanel(packetLossRateB, packetLossRateWindowPanel);
+            // 清空ListBox
+            packetLossRatelistBox.Items.Clear();
+            List<Address> addresses = new read_write().ReadXmlRecords();
+            foreach (Address address in addresses)
+            {
+                packetLossRatelistBox.Items.Add($"名称:{address.Name}|IP:{address.Add}-----异常次数:{address.Count}");
+            }
         }
-
         // 辅助方法：切换面板和按钮背景色
         private void SwitchPanel(Button activeButton, Panel activePanel)
         {
@@ -222,6 +241,182 @@ namespace monitoring_for_Airport_network
                 }
             }
 
+        }
+
+        private void begin_Click(object sender, EventArgs e)
+        {
+            // 如果按钮文本是“开 始 巡 检”
+            if (begin.Text == "开 始 巡 检")
+            {
+                // 尝试将 logMTime 转换为整数
+                if (int.TryParse(logMTime.Text, out int LogMTimeint) && LogMTimeint > 0)
+                {
+                    // 显示确认消息框
+                    if (MessageBox.Show("开始巡检后，请勿关闭程序，否则巡检将无法正常进行，是否继续？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        // 禁用 logMTime 文本框，并更改按钮文本
+                        logMTime.Enabled = false;
+                        logMbutton.Enabled = false;
+                        logMlabel.Visible = true;
+                        begin.Text = "停 止 巡 检";
+                        StartTimer(LogMTimeint * 1000);
+                        isTimerRunning = true;
+                        warningbutton.Visible = true;
+                        warningbutton.Text = "开启告警器";
+                    }
+                }
+                else
+                {
+                    // 提示输入的值无效
+                    MessageBox.Show("请输入一个有效的巡检时间。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // 启用 logMTime 文本框，并更改按钮文本
+                logMTime.Enabled = true;
+                begin.Text = "开 始 巡 检";
+                StopTimer();
+                isTimerRunning = false;
+                logMbutton.Enabled = true;
+                logMlabel.Visible = false;
+                warningbutton.Visible = false;
+                open = 0;
+            }
+        }
+
+        private void StartTimer(double interval)
+        {
+            // 创建一个计时器并设置间隔时间（毫秒）
+            aTimer = new System.Timers.Timer(interval);
+
+            // 设置计时器的事件处理方法
+            aTimer.Elapsed += OnTimedEvent;
+
+            // 设置计时器的自动重置属性（每次间隔时间到时都会触发事件）
+            aTimer.AutoReset = true;
+
+            // 启动计时器
+            aTimer.Enabled = true;
+        }
+
+        private async void OnTimedEvent(object? sender, ElapsedEventArgs e)
+        {
+            await StartPolling();
+        }
+
+        private static void StopTimer()
+        {
+            if (aTimer != null)
+            {
+                // 停止计时器
+                aTimer.Stop();
+                aTimer.Dispose();
+            }
+        }
+
+        private async Task StartPolling()
+        {
+            // 创建PollingIP对象
+            var polling = new pollingIP();
+
+            // 调用PingAddressesAsync方法并等待结果
+            var results = await polling.PingAddressesAsync();
+
+            // 填充ListBox
+            FillListBox(results);
+        }
+
+        private void FillListBox(Dictionary<Address, bool> results)
+        {
+            if (logMlistBox.InvokeRequired)
+            {
+                // 如果需要在UI线程上调用，则使用Invoke方法
+                logMlistBox.Invoke(new Action<Dictionary<Address, bool>>(FillListBox), results);
+            }
+            else
+            {
+                // 清空ListBox
+                logMlistBox.Items.Clear();
+                frequency.Text = totalCount++.ToString();
+                DateTime now = DateTime.Now;
+                string formattedTime = "";
+                directoryStructure directoryStructure = new directoryStructure();
+                read_write read_write = new read_write();             // 将结果添加到ListBox中
+                foreach (var result in results)
+                {
+                    now = DateTime.Now;
+                    formattedTime = now.ToString("yyyy年MM月dd日 HH:mm:ss");
+                    // 判断Ping是否成功
+                    if (result.Value)
+                    {
+                        // 如果Ping成功，添加成功的消息
+                        logMlistBox.Items.Add($"时间: {formattedTime} 巡检通过 名称: {result.Key.Name}");
+                        directoryStructure.LogMessage($"时间: {formattedTime} 巡检通过 名称: {result.Key.Name}");
+                    }
+                    else
+                    {
+                        // 如果Ping失败，添加失败的消息
+                        logMlistBox.Items.Add($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
+                        logMwrongslistBox.Items.Add($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
+                        directoryStructure.LogMessage($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
+                        read_write.UpdateXmlRecord(new Address(result.Key.Id, result.Key.Work, result.Key.Name, result.Key.Add, result.Key.Count + 1));
+                        PlayAlarmSound();
+                    }
+                }
+            }
+
+        }
+
+        private void logMbutton_Click(object sender, EventArgs e)
+        {
+            directoryStructure directoryStructure = new directoryStructure();
+            directoryStructure.OpenDirectory();
+        }
+
+        private void logMwrongsClearbutton_Click(object sender, EventArgs e)
+        {
+            logMwrongslistBox.Items.Clear();
+        }
+
+        private void warningbutton_Click(object sender, EventArgs e)
+        {
+            if (warningbutton.Text == "关闭告警器")
+            {
+                warningbutton.Text = "开启告警器";
+                open = 0;
+            }
+            else
+            {
+                warningbutton.Text = "关闭告警器";
+                open = 1;
+            }
+        }
+
+        private void PlayAlarmSound()
+        {
+            if (open == 1)
+            {
+                // 获取当前程序集
+                Assembly assembly = Assembly.GetExecutingAssembly();
+
+                // 构建嵌入资源的名称
+                string resourceName = "monitoring_for_Airport_network.Resources.warning.wav";
+
+                // 从嵌入资源中读取音频数据
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    if (stream == null)
+                    {
+                        return;
+                    }
+
+                    using (SoundPlayer player = new SoundPlayer(stream))
+                    {
+                        player.PlaySync();
+                    }
+                }
+            }
         }
     }
 }

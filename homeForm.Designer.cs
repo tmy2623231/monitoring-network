@@ -31,33 +31,36 @@
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             addressPools = new Button();
             quit = new Button();
             homeLabel = new Label();
             addPoolsWindowPanel = new Panel();
-            addPoolsDataGridView = new DataGridView();
             logMWindowPanel = new Panel();
-            logMCycleTime = new Label();
-            comboBox1 = new ComboBox();
-            logMdataGridView = new DataGridView();
             packetLossRateWindowPanel = new Panel();
-            packetLossRatedataGridView = new DataGridView();
+            frequency = new Label();
+            packetLossRatelabel = new Label();
+            packetLossRatelistBox = new ListBox();
+            logMwrongs = new Label();
+            logMwrongslistBox = new ListBox();
+            logMlabel = new Label();
+            logMlistBox = new ListBox();
+            Unit = new Label();
+            logMCycleTime = new Label();
+            logMwrongsClearbutton = new Button();
+            logMbutton = new Button();
+            warningbutton = new Button();
+            begin = new Button();
+            logMTime = new ComboBox();
+            addPoolsDataGridView = new DataGridView();
             addPoolsB = new Button();
             logMB = new Button();
             packetLossRateB = new Button();
             readwriteBindingSource = new BindingSource(components);
             readwriteBindingSource1 = new BindingSource(components);
-            Unit = new Label();
             addPoolsWindowPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)addPoolsDataGridView).BeginInit();
             logMWindowPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)logMdataGridView).BeginInit();
             packetLossRateWindowPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)packetLossRatedataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)addPoolsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)readwriteBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)readwriteBindingSource1).BeginInit();
             SuspendLayout();
@@ -108,6 +111,186 @@
             addPoolsWindowPanel.TabIndex = 7;
             addPoolsWindowPanel.Visible = false;
             // 
+            // logMWindowPanel
+            // 
+            logMWindowPanel.Controls.Add(logMwrongs);
+            logMWindowPanel.Controls.Add(logMwrongslistBox);
+            logMWindowPanel.Controls.Add(logMlabel);
+            logMWindowPanel.Controls.Add(logMlistBox);
+            logMWindowPanel.Controls.Add(Unit);
+            logMWindowPanel.Controls.Add(logMCycleTime);
+            logMWindowPanel.Controls.Add(logMwrongsClearbutton);
+            logMWindowPanel.Controls.Add(logMbutton);
+            logMWindowPanel.Controls.Add(warningbutton);
+            logMWindowPanel.Controls.Add(begin);
+            logMWindowPanel.Controls.Add(logMTime);
+            logMWindowPanel.Location = new Point(12, 143);
+            logMWindowPanel.Name = "logMWindowPanel";
+            logMWindowPanel.Size = new Size(570, 580);
+            logMWindowPanel.TabIndex = 9;
+            // 
+            // packetLossRateWindowPanel
+            // 
+            packetLossRateWindowPanel.Controls.Add(frequency);
+            packetLossRateWindowPanel.Controls.Add(packetLossRatelabel);
+            packetLossRateWindowPanel.Controls.Add(packetLossRatelistBox);
+            packetLossRateWindowPanel.Location = new Point(9, 146);
+            packetLossRateWindowPanel.Name = "packetLossRateWindowPanel";
+            packetLossRateWindowPanel.Size = new Size(570, 580);
+            packetLossRateWindowPanel.TabIndex = 8;
+            packetLossRateWindowPanel.Visible = false;
+            // 
+            // frequency
+            // 
+            frequency.AutoSize = true;
+            frequency.Location = new Point(111, 15);
+            frequency.Name = "frequency";
+            frequency.Size = new Size(15, 17);
+            frequency.TabIndex = 17;
+            frequency.Text = "0";
+            // 
+            // packetLossRatelabel
+            // 
+            packetLossRatelabel.AutoSize = true;
+            packetLossRatelabel.Location = new Point(12, 15);
+            packetLossRatelabel.Name = "packetLossRatelabel";
+            packetLossRatelabel.Size = new Size(104, 17);
+            packetLossRatelabel.TabIndex = 16;
+            packetLossRatelabel.Text = "本次巡检总次数：";
+            // 
+            // packetLossRatelistBox
+            // 
+            packetLossRatelistBox.BackColor = SystemColors.Control;
+            packetLossRatelistBox.BorderStyle = BorderStyle.None;
+            packetLossRatelistBox.FormattingEnabled = true;
+            packetLossRatelistBox.ItemHeight = 17;
+            packetLossRatelistBox.Location = new Point(3, 49);
+            packetLossRatelistBox.Name = "packetLossRatelistBox";
+            packetLossRatelistBox.Size = new Size(550, 493);
+            packetLossRatelistBox.TabIndex = 14;
+            // 
+            // logMwrongs
+            // 
+            logMwrongs.AutoSize = true;
+            logMwrongs.Location = new Point(6, 370);
+            logMwrongs.Name = "logMwrongs";
+            logMwrongs.Size = new Size(140, 17);
+            logMwrongs.TabIndex = 17;
+            logMwrongs.Text = "运行期间循行失败记录：";
+            // 
+            // logMwrongslistBox
+            // 
+            logMwrongslistBox.BackColor = SystemColors.Control;
+            logMwrongslistBox.BorderStyle = BorderStyle.None;
+            logMwrongslistBox.FormattingEnabled = true;
+            logMwrongslistBox.ItemHeight = 17;
+            logMwrongslistBox.Location = new Point(3, 395);
+            logMwrongslistBox.Name = "logMwrongslistBox";
+            logMwrongslistBox.Size = new Size(550, 136);
+            logMwrongslistBox.TabIndex = 16;
+            // 
+            // logMlabel
+            // 
+            logMlabel.AutoSize = true;
+            logMlabel.Location = new Point(241, 554);
+            logMlabel.Name = "logMlabel";
+            logMlabel.Size = new Size(176, 17);
+            logMlabel.TabIndex = 15;
+            logMlabel.Text = "停止巡检后，激活日志目录按钮";
+            logMlabel.Visible = false;
+            // 
+            // logMlistBox
+            // 
+            logMlistBox.BackColor = SystemColors.Control;
+            logMlistBox.BorderStyle = BorderStyle.None;
+            logMlistBox.FormattingEnabled = true;
+            logMlistBox.ItemHeight = 17;
+            logMlistBox.Location = new Point(3, 49);
+            logMlistBox.Name = "logMlistBox";
+            logMlistBox.Size = new Size(550, 306);
+            logMlistBox.TabIndex = 14;
+            // 
+            // Unit
+            // 
+            Unit.AutoSize = true;
+            Unit.Location = new Point(165, 15);
+            Unit.Name = "Unit";
+            Unit.Size = new Size(20, 17);
+            Unit.TabIndex = 13;
+            Unit.Text = "秒";
+            // 
+            // logMCycleTime
+            // 
+            logMCycleTime.AutoSize = true;
+            logMCycleTime.Location = new Point(11, 15);
+            logMCycleTime.Name = "logMCycleTime";
+            logMCycleTime.Size = new Size(92, 17);
+            logMCycleTime.TabIndex = 12;
+            logMCycleTime.Text = "巡检循环时间：";
+            // 
+            // logMwrongsClearbutton
+            // 
+            logMwrongsClearbutton.FlatAppearance.BorderColor = Color.Gainsboro;
+            logMwrongsClearbutton.FlatStyle = FlatStyle.Flat;
+            logMwrongsClearbutton.ForeColor = SystemColors.ControlText;
+            logMwrongsClearbutton.Location = new Point(423, 364);
+            logMwrongsClearbutton.Name = "logMwrongsClearbutton";
+            logMwrongsClearbutton.Size = new Size(130, 29);
+            logMwrongsClearbutton.TabIndex = 1;
+            logMwrongsClearbutton.Text = "清除错误日志";
+            logMwrongsClearbutton.UseVisualStyleBackColor = true;
+            logMwrongsClearbutton.Click += logMwrongsClearbutton_Click;
+            // 
+            // logMbutton
+            // 
+            logMbutton.FlatAppearance.BorderColor = Color.Gainsboro;
+            logMbutton.FlatStyle = FlatStyle.Flat;
+            logMbutton.ForeColor = SystemColors.ControlText;
+            logMbutton.Location = new Point(423, 548);
+            logMbutton.Name = "logMbutton";
+            logMbutton.Size = new Size(130, 29);
+            logMbutton.TabIndex = 1;
+            logMbutton.Text = "打开日志目录";
+            logMbutton.UseVisualStyleBackColor = true;
+            logMbutton.Click += logMbutton_Click;
+            // 
+            // warningbutton
+            // 
+            warningbutton.FlatAppearance.BorderColor = Color.Gainsboro;
+            warningbutton.FlatStyle = FlatStyle.Flat;
+            warningbutton.ForeColor = SystemColors.ControlText;
+            warningbutton.Location = new Point(191, 9);
+            warningbutton.Name = "warningbutton";
+            warningbutton.Size = new Size(84, 28);
+            warningbutton.TabIndex = 1;
+            warningbutton.Text = "开启告警器";
+            warningbutton.UseVisualStyleBackColor = true;
+            warningbutton.Visible = false;
+            warningbutton.Click += warningbutton_Click;
+            // 
+            // begin
+            // 
+            begin.FlatAppearance.BorderColor = Color.Gainsboro;
+            begin.FlatStyle = FlatStyle.Flat;
+            begin.ForeColor = SystemColors.ControlText;
+            begin.Location = new Point(423, 3);
+            begin.Name = "begin";
+            begin.Size = new Size(130, 40);
+            begin.TabIndex = 1;
+            begin.Text = "开 始 巡 检";
+            begin.UseVisualStyleBackColor = true;
+            begin.Click += begin_Click;
+            // 
+            // logMTime
+            // 
+            logMTime.DropDownStyle = ComboBoxStyle.DropDownList;
+            logMTime.FormattingEnabled = true;
+            logMTime.Items.AddRange(new object[] { "5", "10", "15", "20", "25", "30" });
+            logMTime.Location = new Point(109, 12);
+            logMTime.Name = "logMTime";
+            logMTime.Size = new Size(50, 25);
+            logMTime.TabIndex = 11;
+            // 
             // addPoolsDataGridView
             // 
             addPoolsDataGridView.AllowUserToAddRows = false;
@@ -147,119 +330,6 @@
             addPoolsDataGridView.TabIndex = 10;
             addPoolsDataGridView.CellContentClick += addPoolsDataGridView_CellContentClick;
             // 
-            // logMWindowPanel
-            // 
-            logMWindowPanel.Controls.Add(Unit);
-            logMWindowPanel.Controls.Add(logMCycleTime);
-            logMWindowPanel.Controls.Add(comboBox1);
-            logMWindowPanel.Controls.Add(logMdataGridView);
-            logMWindowPanel.Location = new Point(594, 146);
-            logMWindowPanel.Name = "logMWindowPanel";
-            logMWindowPanel.Size = new Size(570, 580);
-            logMWindowPanel.TabIndex = 9;
-            // 
-            // logMCycleTime
-            // 
-            logMCycleTime.AutoSize = true;
-            logMCycleTime.Location = new Point(11, 15);
-            logMCycleTime.Name = "logMCycleTime";
-            logMCycleTime.Size = new Size(92, 17);
-            logMCycleTime.TabIndex = 12;
-            logMCycleTime.Text = "巡检循环时间：";
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(109, 12);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(56, 25);
-            comboBox1.TabIndex = 11;
-            // 
-            // logMdataGridView
-            // 
-            logMdataGridView.AllowUserToAddRows = false;
-            logMdataGridView.AllowUserToDeleteRows = false;
-            logMdataGridView.AllowUserToResizeColumns = false;
-            logMdataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            logMdataGridView.BackgroundColor = SystemColors.Control;
-            logMdataGridView.BorderStyle = BorderStyle.None;
-            logMdataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            logMdataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Microsoft YaHei UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            logMdataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            logMdataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Microsoft YaHei UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            logMdataGridView.DefaultCellStyle = dataGridViewCellStyle4;
-            logMdataGridView.EnableHeadersVisualStyles = false;
-            logMdataGridView.GridColor = SystemColors.Control;
-            logMdataGridView.Location = new Point(3, 84);
-            logMdataGridView.Name = "logMdataGridView";
-            logMdataGridView.ReadOnly = true;
-            logMdataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            logMdataGridView.RowHeadersVisible = false;
-            logMdataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            logMdataGridView.Size = new Size(550, 493);
-            logMdataGridView.TabIndex = 10;
-            // 
-            // packetLossRateWindowPanel
-            // 
-            packetLossRateWindowPanel.Controls.Add(packetLossRatedataGridView);
-            packetLossRateWindowPanel.Location = new Point(1181, 146);
-            packetLossRateWindowPanel.Name = "packetLossRateWindowPanel";
-            packetLossRateWindowPanel.Size = new Size(570, 580);
-            packetLossRateWindowPanel.TabIndex = 8;
-            packetLossRateWindowPanel.Visible = false;
-            // 
-            // packetLossRatedataGridView
-            // 
-            packetLossRatedataGridView.AllowUserToAddRows = false;
-            packetLossRatedataGridView.AllowUserToDeleteRows = false;
-            packetLossRatedataGridView.AllowUserToResizeColumns = false;
-            packetLossRatedataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            packetLossRatedataGridView.BackgroundColor = SystemColors.Control;
-            packetLossRatedataGridView.BorderStyle = BorderStyle.None;
-            packetLossRatedataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            packetLossRatedataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Microsoft YaHei UI", 9F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            packetLossRatedataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            packetLossRatedataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Control;
-            dataGridViewCellStyle6.Font = new Font("Microsoft YaHei UI", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            packetLossRatedataGridView.DefaultCellStyle = dataGridViewCellStyle6;
-            packetLossRatedataGridView.EnableHeadersVisualStyles = false;
-            packetLossRatedataGridView.GridColor = SystemColors.Control;
-            packetLossRatedataGridView.Location = new Point(3, 28);
-            packetLossRatedataGridView.Name = "packetLossRatedataGridView";
-            packetLossRatedataGridView.ReadOnly = true;
-            packetLossRatedataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            packetLossRatedataGridView.RowHeadersVisible = false;
-            packetLossRatedataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            packetLossRatedataGridView.Size = new Size(550, 493);
-            packetLossRatedataGridView.TabIndex = 10;
-            // 
             // addPoolsB
             // 
             addPoolsB.FlatAppearance.BorderColor = Color.Gainsboro;
@@ -296,7 +366,7 @@
             packetLossRateB.Name = "packetLossRateB";
             packetLossRateB.Size = new Size(130, 40);
             packetLossRateB.TabIndex = 1;
-            packetLossRateB.Text = "丢包率";
+            packetLossRateB.Text = "故障统计";
             packetLossRateB.UseVisualStyleBackColor = true;
             packetLossRateB.Click += packetLossRateB_Click;
             // 
@@ -308,23 +378,14 @@
             // 
             readwriteBindingSource1.DataSource = typeof(controller.read_write);
             // 
-            // Unit
-            // 
-            Unit.AutoSize = true;
-            Unit.Location = new Point(171, 15);
-            Unit.Name = "Unit";
-            Unit.Size = new Size(20, 17);
-            Unit.TabIndex = 13;
-            Unit.Text = "秒";
-            // 
             // homeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1824, 800);
+            ClientSize = new Size(600, 800);
             ControlBox = false;
-            Controls.Add(logMWindowPanel);
             Controls.Add(packetLossRateWindowPanel);
+            Controls.Add(logMWindowPanel);
             Controls.Add(addPoolsWindowPanel);
             Controls.Add(homeLabel);
             Controls.Add(packetLossRateB);
@@ -341,12 +402,11 @@
             Text = "homeForm";
             MouseDown += homeForm_MouseDown;
             addPoolsWindowPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)addPoolsDataGridView).EndInit();
             logMWindowPanel.ResumeLayout(false);
             logMWindowPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)logMdataGridView).EndInit();
             packetLossRateWindowPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)packetLossRatedataGridView).EndInit();
+            packetLossRateWindowPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)addPoolsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)readwriteBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)readwriteBindingSource1).EndInit();
             ResumeLayout(false);
@@ -366,10 +426,19 @@
         private BindingSource readwriteBindingSource;
         private BindingSource readwriteBindingSource1;
         private DataGridView addPoolsDataGridView;
-        private DataGridView logMdataGridView;
-        private DataGridView packetLossRatedataGridView;
         private Label logMCycleTime;
-        private ComboBox comboBox1;
+        private ComboBox logMTime;
         private Label Unit;
+        private Button begin;
+        private ListBox logMlistBox;
+        private ListBox packetLossRatelistBox;
+        private Label frequency;
+        private Label packetLossRatelabel;
+        private Button logMbutton;
+        private Label logMlabel;
+        private ListBox logMwrongslistBox;
+        private Label logMwrongs;
+        private Button logMwrongsClearbutton;
+        private Button warningbutton;
     }
 }

@@ -202,7 +202,8 @@ namespace monitoring_for_Airport_network.controller
                 new XElement("id", address.Id),
                 new XElement("work", address.Work),
                 new XElement("name", address.Name),
-                new XElement("add", address.Add)
+                new XElement("add", address.Add),
+                new XElement("count", address.Count)
             );
         }
 
@@ -217,7 +218,8 @@ namespace monitoring_for_Airport_network.controller
                 (int)element.Element("id"),
                 (int)element.Element("work"),
                 (string)element.Element("name"),
-                (string)element.Element("add")
+                (string)element.Element("add"),
+                (int)element.Element("count")
             );
         }
     }

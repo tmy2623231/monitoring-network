@@ -112,7 +112,7 @@ namespace monitoring_for_Airport_network
                 return;
             }
 
-            Address address = new Address(Id, 1, nameTextBox.Text, addTextBox.Text);
+            Address address = new Address(Id, 1, nameTextBox.Text, addTextBox.Text,0);
             read_write read_Write = new read_write();
             bool result = isUpdate ? read_Write.UpdateXmlRecord(address) : read_Write.AddXmlRecord(address);
 
