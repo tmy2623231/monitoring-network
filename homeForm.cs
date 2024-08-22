@@ -1,23 +1,15 @@
-﻿using monitoring_for_Airport_network.controller;
-using MonitoringForAirportNetwork.DAL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Timers;
+﻿using monitoring_network.controller;
+using monitoring_network.DAL;
 using System.Media;
+using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Timers;
+using System.Xml.Linq;
 
 
 
-namespace monitoring_for_Airport_network
+namespace monitoring_network
 {
     public partial class homeForm : Form
     {
@@ -43,6 +35,7 @@ namespace monitoring_for_Airport_network
             InitializeComponent();
             CenterToScreen();  // 将窗口居中显示
             AssignmentListView(); // 列表视图赋值
+            FillDataGridView(); // 数据表格赋值
             logMTime.SelectedIndex = 0;
         }
 
@@ -343,6 +336,7 @@ namespace monitoring_for_Airport_network
                 string formattedTime = "";
                 directoryStructure directoryStructure = new directoryStructure();
                 read_write read_write = new read_write();             // 将结果添加到ListBox中
+
                 foreach (var result in results)
                 {
                     now = DateTime.Now;
@@ -358,7 +352,14 @@ namespace monitoring_for_Airport_network
                     {
                         // 如果Ping失败，添加失败的消息
                         logMlistBox.Items.Add($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
-                        logMwrongslistBox.Items.Add($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
+
+                        // 添加到DataGridView
+                        int rowIndex = logMwrongsGridView.Rows.Add($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
+                        logMwrongsGridView.Rows[rowIndex].Tag = result.Key.Id; // 将ID存储在行的Tag属性中
+                        DataGridViewButtonCell editButtonCell = (DataGridViewButtonCell)logMwrongsGridView.Rows[rowIndex].Cells["check"];
+                        editButtonCell.Value = "查看";
+
+                        // 添加到日志文件
                         directoryStructure.LogMessage($"时间: {formattedTime} Ping不通过！！！ 名称: {result.Key.Name} IP: {result.Key.Add}");
                         read_write.UpdateXmlRecord(new Address(result.Key.Id, result.Key.Work, result.Key.Name, result.Key.Add, result.Key.Count + 1));
                         PlayAlarmSound();
@@ -366,6 +367,21 @@ namespace monitoring_for_Airport_network
                 }
             }
 
+        }
+
+
+        // 处理DataGridView中的按钮点击事件
+        private void logMwrongsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            read_write read_Write = new read_write();
+            int? id = null;
+
+            if (e.ColumnIndex == logMwrongsGridView.Columns["check"].Index && e.RowIndex >= 0)
+            {
+                id = (int)logMwrongsGridView.Rows[e.RowIndex].Tag;
+                errorDetails errorDetails = new errorDetails(id);
+                errorDetails.ShowDialog();
+            }
         }
 
         private void logMbutton_Click(object sender, EventArgs e)
@@ -376,7 +392,9 @@ namespace monitoring_for_Airport_network
 
         private void logMwrongsClearbutton_Click(object sender, EventArgs e)
         {
-            logMwrongslistBox.Items.Clear();
+            // 清除现有项
+            logMwrongsGridView.Rows.Clear();
+            //logMwrongsGridView.Columns.Clear();
         }
 
         private void warningbutton_Click(object sender, EventArgs e)
@@ -401,7 +419,7 @@ namespace monitoring_for_Airport_network
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
                 // 构建嵌入资源的名称
-                string resourceName = "monitoring_for_Airport_network.Resources.warning.wav";
+                string resourceName = "monitoring_network.Resources.warning.wav";
 
                 // 从嵌入资源中读取音频数据
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -417,6 +435,28 @@ namespace monitoring_for_Airport_network
                     }
                 }
             }
+        }
+
+
+
+
+        // 填充DataGridView
+        private void FillDataGridView()
+        {
+            // 添加列
+            logMwrongsGridView.Columns.Add("wrongs", "错 误 信 息");
+
+            // 添加按钮列
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn
+            {
+                Name = "check",
+                HeaderText = "操 作",
+                UseColumnTextForButtonValue = false, // 禁用使用列文本作为按钮值
+                FlatStyle = FlatStyle.Flat,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.None, // 设置为不自动调整大小
+                Width = 80 // 设置列宽
+            };
+            logMwrongsGridView.Columns.Add(buttonColumn);
         }
     }
 }

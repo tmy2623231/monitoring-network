@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using monitoring_network.DAL;
 using System.Xml.Linq;
-using MonitoringForAirportNetwork.DAL;
 
-namespace monitoring_for_Airport_network.controller
+namespace monitoring_network.controller
 {
     public class read_write
     {
         private readonly string logDirectory;
         private readonly string directoryPath = Path.Combine(Environment.CurrentDirectory, "data(xml)", "Address.xml");
+        private readonly string errorPath = Path.Combine(Environment.CurrentDirectory, "log", "error", "error.xml");
 
         public read_write()
         {

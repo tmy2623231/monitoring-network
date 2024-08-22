@@ -1,13 +1,7 @@
-﻿using MonitoringForAirportNetwork.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using monitoring_network.DAL;
 using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace monitoring_for_Airport_network.controller
+namespace monitoring_network.controller
 {
     public class pollingIP
     {
@@ -33,7 +27,8 @@ namespace monitoring_for_Airport_network.controller
                 {
                     // 创建并启动Ping测试任务
                     var task = PingAddressAsync(address.Add)
-                        .ContinueWith(t => {
+                        .ContinueWith(t =>
+                        {
                             lock (pingResults) // 锁定字典以确保线程安全
                             {
                                 pingResults[address] = t.Result;

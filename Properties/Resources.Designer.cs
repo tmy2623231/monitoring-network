@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace monitoring_for_Airport_network.Properties {
+namespace monitoring_network.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace monitoring_for_Airport_network.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("monitoring_for_Airport_network.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("monitoring_network.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,16 @@ namespace monitoring_for_Airport_network.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap fdjy {
+            get {
+                object obj = ResourceManager.GetObject("fdjy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

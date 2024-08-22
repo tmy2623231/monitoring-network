@@ -1,6 +1,6 @@
-using monitoring_for_Airport_network.controller;
+using monitoring_network.controller;
 
-namespace monitoring_for_Airport_network
+namespace monitoring_network
 {
     internal static class Program
     {

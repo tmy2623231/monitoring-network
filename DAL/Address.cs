@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MonitoringForAirportNetwork.DAL
+﻿namespace monitoring_network.DAL
 {
     public class Address
     {

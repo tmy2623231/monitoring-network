@@ -1,19 +1,9 @@
-﻿using monitoring_for_Airport_network.controller;
-using MonitoringForAirportNetwork.DAL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+﻿using monitoring_network.controller;
+using monitoring_network.DAL;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace monitoring_for_Airport_network
+namespace monitoring_network
 {
     public partial class addressPoolsForm : Form
     {
@@ -112,7 +102,7 @@ namespace monitoring_for_Airport_network
                 return;
             }
 
-            Address address = new Address(Id, 1, nameTextBox.Text, addTextBox.Text,0);
+            Address address = new Address(Id, 1, nameTextBox.Text, addTextBox.Text, 0);
             read_write read_Write = new read_write();
             bool result = isUpdate ? read_Write.UpdateXmlRecord(address) : read_Write.AddXmlRecord(address);
 

@@ -1,4 +1,4 @@
-﻿namespace monitoring_for_Airport_network
+﻿namespace monitoring_network
 {
     partial class addressPoolsForm
     {

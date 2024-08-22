@@ -1,14 +1,8 @@
-﻿using MonitoringForAirportNetwork.DAL;
-using System;
-using System.Collections.Generic;
+﻿using monitoring_network.DAL;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 
-namespace monitoring_for_Airport_network.controller
+namespace monitoring_network.controller
 {
     public class directoryStructure
     {
@@ -19,12 +13,16 @@ namespace monitoring_for_Airport_network.controller
             string currentDirectory = Environment.CurrentDirectory;
             string directoryPath = Path.Combine(currentDirectory, "data(xml)");
             ExistsFile(directoryPath);
-            Address address = new Address(0, 1, "本机测试数据", "127.0.0.1",0);
+            Address address = new Address(0, 1, "本机测试数据", "127.0.0.1", 0);
             CreateXML(directoryPath, address);
             directoryPath = Path.Combine(currentDirectory, "log");
             ExistsFile(directoryPath);
-            directoryPath = Path.Combine(directoryPath, "SystemLog");
+            Path.Combine(directoryPath, "SystemLog");
             ExistsFile(directoryPath);
+            directoryPath = Path.Combine(directoryPath, "error");
+            ExistsFile(directoryPath);
+            address = new Address(0, 1, "本机测试数据", "127.0.0.1", 0);
+            errorXML(directoryPath, address);
 
         }
         static void ExistsFile(string Path)
@@ -57,6 +55,32 @@ namespace monitoring_for_Airport_network.controller
                 doc.Save(pathXML);
             }
         }
+
+
+
+        public void errorXML(string pathXML, Address address)
+        {
+            pathXML = Path.Combine(pathXML, "error.xml");
+            if (!File.Exists(pathXML))
+            {
+                XDocument doc = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("ip",
+                        new XAttribute("version", "1.0"),
+                        new XElement("List",
+                            new XElement("id", address.Id),
+                            new XElement("work", address.Work),
+                            new XElement("name", address.Name),
+                            new XElement("add", address.Add),
+                            new XElement("count", address.Count)
+                        )
+                    )
+                );
+                doc.Save(pathXML);
+            }
+        }
+
+
         public void LogMessage(string message)
         {
             // 指定日志文件目录
